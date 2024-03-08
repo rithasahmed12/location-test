@@ -171,7 +171,7 @@ function success(position) {
         marker.setPosition({ lat: latitude, lng: longitude });
     } else {
         var currentIcon = {
-            url: '/current-indicator.png',
+            url: 'current-indicator.png',
             scaledSize: new google.maps.Size(40, 40),
         };
         marker = new google.maps.Marker({
