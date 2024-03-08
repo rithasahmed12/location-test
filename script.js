@@ -171,6 +171,7 @@ function startLiveTracking() {
 
 // Function to track user's position
 function trackUser(position) {
+    console.log('position:',position);
   const latitude = position.coords.latitude;
   const longitude = position.coords.longitude;
 
@@ -193,6 +194,7 @@ function trackUser(position) {
   if (distanceToDestination < ARRIVAL_THRESHOLD) {
     // User has reached the destination, stop tracking
     stopLiveTracking();
+    alert('reached');
     console.log("You have reached your destination!");
   }
 }
@@ -202,6 +204,15 @@ function stopLiveTracking() {
   if (watchId) {
     navigator.geolocation.clearWatch(watchId);
     watchId = undefined;
+  }
+
+      // Clear the directions displayed on the map
+      directionsDisplay.setDirections({ routes: [] });
+
+      // Remove the destination marker from the map
+  if (marker) {
+    marker.setMap(null);
+    marker = undefined; // Reset marker variable
   }
 }
 
