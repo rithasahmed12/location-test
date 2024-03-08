@@ -25,10 +25,6 @@ function success(position) {
   // Create the map
   map = new google.maps.Map(document.getElementById('googleMap'), mapOptions);
 
-  var currentIcon = {
-    url: '/img/current-indicator.png', // Path to your custom icon image
-    scaledSize: new google.maps.Size(40, 40), // Size of the icon
-  }
  
 
   // Create a marker for the current location
@@ -36,7 +32,7 @@ function success(position) {
     position: { lat: latitude, lng: longitude },
     map: map,
     title: 'Your Location',
-    icon: currentIcon
+   
   });
 
   // Add click listener to set destination on map click
@@ -55,16 +51,12 @@ function addPinMarker(event){
     marker.setMap(null)
   }
 
-  var endIcon = {
-    url: '/img/end-indicator.png', // Path to your custom icon image
-    scaledSize: new google.maps.Size(30, 40), // Size of the icon
-  }
 
   marker = new google.maps.Marker({
       position: event.latLng,
       map: map,
       title: 'Destination',
-      icon: endIcon
+     
     });
 
     // Update destination input field with coordinates
