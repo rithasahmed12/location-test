@@ -1,8 +1,17 @@
 var mapOptions = {};
 var map;
 var currMarker;
-var marker;
+var desMarker;
 
+var startIcon = {
+  url: 'curr-start-indicator.png', // Path to your custom icon image
+  scaledSize: new google.maps.Size(40, 40), // Size of the icon
+}
+
+var currentIcon = {
+  url: 'current-indicator.png', // Path to your custom icon image
+  scaledSize: new google.maps.Size(40, 40), // Size of the icon
+}
 
 
 
@@ -13,7 +22,6 @@ if (navigator.geolocation) {
 }
 
 function success(position) {
-  console.log('lalala:', position);
   const latitude = position.coords.latitude;
   const longitude = position.coords.longitude;
 
@@ -29,10 +37,6 @@ function success(position) {
   // Create the map
   map = new google.maps.Map(document.getElementById('googleMap'), mapOptions);
 
-  var currentIcon = {
-    url: 'current-indicator.png', // Path to your custom icon image
-    scaledSize: new google.maps.Size(40, 40), // Size of the icon
-  }
  
 
   // Create a marker for the current location
@@ -57,8 +61,8 @@ function success(position) {
 }
 
 function addPinMarker(event){
-  if(marker){
-    marker.setMap(null)
+  if(desMarker){
+    desMarker.setMap(null)
   }
 
   var endIcon = {
@@ -66,7 +70,7 @@ function addPinMarker(event){
     scaledSize: new google.maps.Size(30, 40), // Size of the icon
   }
 
-  marker = new google.maps.Marker({
+  desMarker = new google.maps.Marker({
       position: event.latLng,
       map: map,
       title: 'Destination',
@@ -188,13 +192,15 @@ function trackUser(position) {
     currMarker.setPosition({ lat: latitude, lng: longitude });
   } else {
     // Create user marker if not already created
-    marker = new google.maps.Marker({
+    currMarker = new google.maps.Marker({
       position: { lat: latitude, lng: longitude },
       map: map,
       title: 'Your Location',
       icon: currentIcon
     });
   }
+
+  currMarker.setIcon(startIcon);
 
   // Check if user has reached the destination
   const destination = document.getElementById("to").value;
@@ -239,14 +245,14 @@ function stopLiveTracking() {
   }
   document.getElementById('start-btn').style.display = 'block'
   document.getElementById('stop-btn').style.display = 'none'
-
+  currMarker.setIcon(currentIcon);
       // Clear the directions displayed on the map
       directionsDisplay.setDirections({ routes: [] });
 
       // Remove the destination marker from the map
   if (marker) {
-    marker.setMap(null);
-    marker = undefined; // Reset marker variable
+    desMarker.setMap(null);
+    desMarker = undefined; // Reset marker variable
   }
 }
 
